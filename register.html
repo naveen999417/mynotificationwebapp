@@ -1,0 +1,118 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <meta name="description" content="Login - Register Template">
+    <meta name="author" content="Lorenzo Angelino aka MrLolok">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            background-color: #303641;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        function regsiter()
+{
+        var userna = document.getElementById("username").value;
+        var emai = document.getElementById("email").value;
+        var passwo = document.getElementById("password").value;
+        if((userna == "")||(passwo=="")||(emai==""))
+        {
+            alert("please enter the username or password or email");
+        }
+        if(emai.indexOf("@") < 0) 
+        {
+            alert("address character @ is missing ");
+        }
+        if((passwo.length < 1) || (passwo.length > 15))
+        { 
+            alert("The password must be between 1 to 15 characters");              
+        }
+        var pass=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+        if(!passwo.value.match(pass)) 
+        { 
+          alert("invalid password");
+        }
+        else{	
+    const data ={userna,passwo};
+			const options={
+			method:'POST',
+			header:{
+			'Content-Type':'application/json'
+			},
+			body: JSON.stringify({
+			username:userna
+			,password:passwo
+			})
+			};
+			fetch('/api',options).then(function(response){
+			return response.json();
+			})
+			.then(function(data){
+	          if(data.value==true){
+			  href="homepage.html";
+			  }
+			  else{
+			  alert("enter correctly");
+			  }
+			})
+	}
+	}
+    </script>   
+    <div id="container-register">
+        <div id="title">
+            <i class="material-icons lock">lock</i> Register
+        </div>
+
+        <form>
+            <div class="input">
+                <div class="input-addon">
+                    <i class="material-icons">email</i>
+                </div>
+                <input id="email" placeholder="Email" type="email" required class="validate" autocomplete="off">
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="input">
+                <div class="input-addon">
+                    <i class="material-icons">face</i>
+                </div>
+                <input id="username" placeholder="Username" type="text" required class="validate" autocomplete="off">
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="input">
+                <div class="input-addon">
+                    <i class="material-icons">vpn_key</i>
+                </div>
+                <input id="password" placeholder="Password" type="password" required class="validate" autocomplete="off">
+            </div>
+
+            <div class="remember-me">
+                <input type="checkbox">
+                <span style="color: #DDD">I accept Terms of Service</span>
+            </div>
+
+            <button onclick="register()">REGISTER</button>
+        </form>
+
+        <div class="privacy">
+            <a href="#">Privacy Policy</a>
+        </div>
+
+        <div class="register">
+            Do you already have an account?
+            <a href="login.html"><button id="register-link">Log In here</button></a>
+        </div>
+    </div>
+</body>
+
+</html>
